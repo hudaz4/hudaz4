@@ -1,6 +1,7 @@
 NS1='james.ubuntu.sardinas.cf'
 NS2='dns.xs-1.optnl.com'
 NS3='dns.xs-2.optnl.com'
+NS3='us1-ns.jkimdns.com'
 
 
 LOOP_DELAY=5
