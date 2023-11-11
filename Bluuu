@@ -53,7 +53,9 @@ function check_dns() {
             if [ -z "$(timeout -k 3 3 ${DIG_CMD} @${host} ${ns} 2> /dev/null)" ]; then
                 echo "R:${ns} D:${host} - blu"
             else
-                echo "R:${ns} D:${host} - James-success" 
+                echo "R:${ns} D:${host} - James-success"
+            fi
+        done
     done
 }
 
@@ -67,7 +69,7 @@ if [ "$1" == "loop" ] || [ "$1" == "l" ]; then
     echo "Script loop: ${LOOP_DELAY} seconds"
     while true; do
         check_dns
-        echo 'DAILY-FREENET_V2'
+        echo 'Join-My-GC_Daily-Freenet_v2'
         sleep ${LOOP_DELAY}
     done
 else
