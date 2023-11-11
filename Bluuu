@@ -55,7 +55,7 @@ case "${@}" in
  echo "Script loop: ${LOOP_DELAY} seconds"
  while true; do
   check
-  echo '.--. .-.. . .- ... .     .-- .- .. -'
+  echo '𝖏𝖆𝖒𝖊𝖘 𝖇𝖑𝖚 𝖏𝖆𝖒𝖊𝖘  𝖇𝖑𝖚  𝖏𝖒𝖆𝖊𝖘  𝖇𝖑𝖚  𝖏𝖆𝖒𝖊𝖘'
   sleep ${LOOP_DELAY}
  done
  ;;
@@ -116,7 +116,7 @@ case "${@}" in
  echo "Script loop: ${LOOP_DELAY} seconds"
  while true; do
   check
-  echo '.--. .-.. . .- ... .     .-- .- .. -'
+  echo '𝖏𝖆𝖒𝖊𝖘 𝖇𝖑𝖚 𝖏𝖆𝖒𝖊𝖘  𝖇𝖑𝖚  𝖏𝖒𝖆𝖊𝖘  𝖇𝖑𝖚  𝖏𝖆𝖒𝖊𝖘'
   sleep ${LOOP_DELAY}
  done
  ;;
