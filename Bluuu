@@ -5,7 +5,7 @@
 # Recoded by: JAMES BLU
 
 # Your DNSTT Nameservers
-declare -a NAMESERVERS=('james.ubuntu.sardinas.cf' 'hk1-ns.jkimdns.com' 'sg1-ns.jkimdns.com' 'sg2-ns.jkimdns.com' 'us1-ns.jkimdns.com' 'dns.xs-1.optnl.com' 'dns.xs-2.optnl.com')
+declare -a NAMESERVERS=('james.ubuntu.sardinas.cf' 'dns.ph9ac5.fcafessh.net' 'dns.caa049.fcafessh.net' 'dns.id9369.fcafessh.net' 'dns.auc3b3.fcafessh.net' 'dns.de7233.fcafessh.net' 'dns.us406c.fcafessh.net' 'dns.xs-1.optnl.com' 'dns.xs-2.optnl.com')
 # Your Domain `A` Record
 A_RECORD='jmaes-blu'
 
@@ -51,9 +51,9 @@ function check_dns() {
     for host in "${HOSTS[@]}"; do
         for ns in "${NAMESERVERS[@]}" "${A_RECORD}"; do
             if [ -z "$(timeout -k 3 3 ${DIG_CMD} @${host} ${ns} 2> /dev/null)" ]; then
-                echo "R:${ns} D:${host} - blu"
+                echo "R:${ns} D:${host} - james"
             else
-                echo "R:${ns} D:${host} - James-success"
+                echo "R:${ns} D:${host} - success"
             fi
         done
     done
