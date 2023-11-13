@@ -77,3 +77,14 @@ check() {
             echo -e "${RED}Ping to $target: Failed.${RESET}"
         fi
     done
+}
+
+echo "DNSTT Keep-Alive script with DNS and host IP ping<Discord @civ3>"
+echo "DNS List: ${HOSTS[*]}"
+echo "CTRL + C to close script"
+
+while true; do
+    check
+    echo '.--. .-.. . .- ... .     .-- .- .. -'
+    sleep ${LOOP_DELAY}
+done
