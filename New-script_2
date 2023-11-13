@@ -43,8 +43,8 @@ CUSTOM_DIG=/data/data/com.termux/files/home/go/bin/fastdig
 VER=0.1
 
 # Define text color codes
-GREEN='\e[32m'
-RED='\e[31m'
+PINK='\e[32m'
+BLUE='\e[31m'
 RESET='\e[0m'
 
 case "${DIG_EXEC}" in
