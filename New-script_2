@@ -1,8 +1,8 @@
 #!/bin/bash
 
-## Copyright James_blu
+## Copyright ©UDPTeam
 
-## Discord: JAMES_BLU
+## Discord: [URL]https://discord.gg/civ3[/URL]
 
 ## Script to keep-alive your DNSTT server domain record query from target resolver/local DNS server
 
@@ -16,7 +16,7 @@ LOOP_DELAY=1  # Set the loop delay to 1 second
 
 ## Your DNSTT Nameserver & your Domain `A` Record
 
-NS='james.ubuntu.sardinas.cf'
+NS='ns-ph5.vpnjz.com'
 NS1='dns.ssh-sg-3.vpnsvr.net'
 NS2='dns.xs-1.optnl.com'
 A='ns-ph5.vpnjz.com'
@@ -43,8 +43,8 @@ CUSTOM_DIG=/data/data/com.termux/files/home/go/bin/fastdig
 VER=0.1
 
 # Define text color codes
-PINK='\e[32m'
-BLU='\e[31m'
+GREEN='\e[32m'
+RED='\e[31m'
 RESET='\e[0m'
 
 case "${DIG_EXEC}" in
