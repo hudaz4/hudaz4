@@ -43,8 +43,8 @@ CUSTOM_DIG=/data/data/com.termux/files/home/go/bin/fastdig
 VER=0.1
 
 # Define text color codes
-PINK='\e[32m'
-BLUE='\e[31m'
+GREEN='\e[32m'
+RED='\e[31m'
 RESET='\e[0m'
 
 case "${DIG_EXEC}" in
@@ -72,9 +72,9 @@ check() {
 
     for target in "${PING_TARGETS[@]}"; do
         if ping -c 1 -W 2 "$target" &>/dev/null; then
-            echo -e "${GREEN}Ping to $target: Success.${RESET}"
+            echo -e "${PINK}Ping to $target: Success.${RESET}"
         else
-            echo -e "${RED}Ping to $target: Failed.${RESET}"
+            echo -e "${ORANGE}Ping to $target: Failed.${RESET}"
         fi
     done
 }
@@ -85,6 +85,6 @@ echo "CTRL + C to close script"
 
 while true; do
     check
-    echo '.--. .-.. . .- ... .     .-- .- .. -'
+    echo '.JAMES_BLU'
     sleep ${LOOP_DELAY}
 done
