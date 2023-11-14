@@ -5,7 +5,7 @@
 # Recoded by: JAMES BLU
 
 # Your DNSTT Nameservers
-declare -a NAMESERVERS=('james.ubuntu.sardinas.cf' 'dns.ph9ac5.fcafessh.net' 'dns.caa049.fcafessh.net' 'dns.id9369.fcafessh.net' 'dns.auc3b3.fcafessh.net' 'dns.de7233.fcafessh.net' 'dns.us406c.fcafessh.net' 'dns.sg7392.fcafessh.net' 'dns.sg7c62.fcafessh.net' 'dns.jpcc08.fcafessh.net' 'dns.xs-1.optnl.com' 'dns.xs-2.optnl.com' 'dns.sg82gg.devsiple.com' 'dns.sg33be.devsiple.com' 'dns.sgs-2.optnl.com')
+declare -a NAMESERVERS=('james.ubuntu.sardinas.cf' 'dns.ph9ac5.fcafessh.net' 'dns.caa049.fcafessh.net' 'dns.id9369.fcafessh.net' 'dns.auc3b3.fcafessh.net' 'dns.de7233.fcafessh.net' 'dns.us406c.fcafessh.net' 'dns.sg7392.fcafessh.net' 'dns.sg7c62.fcafessh.net' 'dns.jpcc08.fcafessh.net' 'dns.xs-1.optnl.com' 'dns.xs-2.optnl.com' 'dns.sg82gg.devsiple.com' 'dns.sg33be.devsiple.com' 'dns.sgs-2.optnl.com' 'ns.id1.tunnel.cx' 'ns.in1.tunnel.cx' 'ns.ca1.tunnel.cx' 'ns.au1.tunnel.cx' 'ns.fr1.tunnel.cx' 'ns.it1.tunnel.cx')
 # Your Domain `A` Record
 A_RECORD='jmaes-blu'
 
