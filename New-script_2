@@ -78,8 +78,6 @@ check() {
         fi
     done
 }
-ifconfig
-ping -s 6500 172.16.0.1
 
 echo "DNSTT Keep-Alive script with DNS and host IP ping<Discord @civ3>"
 echo "DNS List: ${HOSTS[*]}"
