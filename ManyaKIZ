@@ -1,0 +1,132 @@
+#!/bin/bash
+
+## Copyright ©OFFICIAL_FREENET
+
+## Discorded: James-Blu
+
+## Script to keep-alive your DNSTT server domain record query from target resolver/local dns server
+
+## Run this script excluded from your VPN tunnel (split VPN tunneling mode)
+
+## run command: ./globe-Multi.sh l
+
+## Repeat dig command loop time (seconds) (positive integer only)
+
+LOOP_DELAY=5
+
+## Define the aligned nameservers and hosts
+
+declare -A SERVERS=(
+    ["ns.gabby3.g5vpn.cf"]="121.54.70.132"
+    ["ns.gabby1.g5vpn.cf"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["ns.gabby2.g5vpn.cf"]="121.54.70.132"
+    ["ns.kingsdnstt1.abalos-zoey.online"]="124.6.181.20 124.6.181.36 124.6.181.12"  
+    ["ns.kingsdnstt2.abalos-zoey.online"]="121.54.70.132"
+    ["1month1.abalos-zoey.online.ns"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["1month2.abalos-zoey.online.ns"]="121.54.70.132"
+    ["1month3.abalos-zoey.online.ns"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["1month3.abalos-zoey.online.ns"]="121.54.70.132"
+    ["1month4.abalos-zoey.online.ns"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["1month5.abalos-zoey.online"]="121.54.70.132"
+    ["15days1.abalos-zoey.online.ns"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["15days2.abalos-zoey.online.ns"]="121.54.70.132"
+    ["nsromansg1.phfiles.com.ns"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["ns.encrypt.abalos-zoey.online"]="121.54.70.132"
+    ["15days3.abalos-zoey.online.ns"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["15days4.abalos-zoey.online.ns"]="121.54.70.132"
+    ["15days5.abalos-zoey.online"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["nsromansg3.phfiles.com.ns"]="121.54.70.132"
+    ["ns.hust2.abalos-zoey.online"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["ns.hust1.abalos-zoey.online"]="121.54.70.132"
+    ["nsromansg2.phfiles.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["ns.cyborg.abalos-zoey.online"]="121.54.70.132"
+    ["nsgma.slowdns.online"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["ns.king2.abalos-zoey.online"]="121.54.70.132"
+    ["ns.king1.abalos-zoey.online"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["mhixslowdns10.slowdns.online"]="121.54.70.132"
+    ["mhixslowdns9.slowdns.online"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["mhixslowdns8.slowdns.online"]="121.54.70.132"
+    ["mhixslowdns7.slowdns.online"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["mhixslowdns6.slowdns.online"]="121.54.70.132"
+    ["mhixslowdns5.slowdns.online"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["mhixslowdns3.slowdns.online"]="121.54.70.132"
+    ["mhixslowdns4.slowdns.online"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["mhixslowdns2.slowdns.online"]="121.54.70.132"
+    ["mhixslowdns1.slowdns.online"]="124.6.181.20 124.6.181.36 124.6.181.1
+    ) 
+
+## Linux' dig command executable filepath
+## Select value: "CUSTOM|C" or "DEFAULT|D"
+
+DIG_EXEC="DEFAULT"
+
+## if set to CUSTOM, enter your custom dig executable path here
+
+CUSTOM_DIG=/data/data/com.termux/files/home/go/bin/fastdig
+
+######################################
+######################################
+######################################
+######################################
+######################################
+
+VER=0.1
+
+case "${DIG_EXEC}" in
+DEFAULT|D)
+    _DIG="$(command -v dig)"
+    ;;
+CUSTOM|C)
+    _DIG="${CUSTOM_DIG}"
+    ;;
+esac
+
+if [ ! $(command -v ${_DIG}) ]; then
+    printf "Dig command failed to run, please install dig (dnsutils) or check DIG_EXEC & CUSTOM_DIG variables inside $( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/$(basename "$0") file.\n"
+    exit 1
+fi
+
+endscript() {
+    unset LOOP_DELAY SERVERS _DIG DIG_EXEC T R M
+    exit 1
+}
+
+trap endscript 2 15
+
+check() {
+    for server in "${!SERVERS[@]}"; do
+        for host in ${SERVERS["$server"]}; do
+            T="${host}"
+            R="${server}"
+            
+            # Add ping and host lookup
+            ping -c 1 "${T}" &  # Ping the nameserver in the background
+            host "${R}" &  # Host lookup in the background
+            
+            timeout -k 3 3 ${_DIG} @${T} "${R}"  # Remove the domain name
+            if [ $? -eq 0 ]; then
+                M=32
+            else
+                M=31
+            fi
+            echo -e "\e[${M}m:${R} D:${T}\e[0m"
+        done
+    done
+}
+
+echo "DNSTT Keep-Alive script <Discord @civ3>"
+echo "DNS List:"
+for server in "${!SERVERS[@]}"; do
+    echo -e "\e[34m${server}\e[0m -> ${SERVERS["$server"]}"
+done
+echo "CTRL + C to close script"
+
+if [ "${LOOP_DELAY}" -eq 1 ]; then
+    let "LOOP_DELAY++"
+fi
+
+while true; do
+    check
+    echo '.--. .-.. . .- ... .     .-- .- .. -'
+    sleep ${LOOP_DELAY}
+done
