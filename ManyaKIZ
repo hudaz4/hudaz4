@@ -1,8 +1,8 @@
 #!/bin/bash
 
-## Copyright ©OFFICIAL_FREENET
+## Copyright ©UDPTeam
 
-## Discorded: James-Blu
+## Discord: https://discord.gg/civ3
 
 ## Script to keep-alive your DNSTT server domain record query from target resolver/local dns server
 
