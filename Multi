@@ -8,7 +8,7 @@
 
 ## Run this script excluded from your VPN tunnel (split VPN tunneling mode)
 
-## run command: ./globe-fast1.sh l
+## run command: ./globe-Multi.sh l
 
 ## Repeat dig command loop time (seconds) (positive integer only)
 
