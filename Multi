@@ -19,6 +19,13 @@ LOOP_DELAY=5
 declare -A SERVERS=(
     ["james.ubuntu.sardinas.cf"]="121.54.70.132"
     ["james.ubuntu.sardinas.cf"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["priv.ns1.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["priv.ns2.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["priv.ns3.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["priv.ns4.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["priv.ns5.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["freesg.ns.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["freeuk.ns.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
 )
 
 ## Linux' dig command executable filepath
