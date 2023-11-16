@@ -1,0 +1,24 @@
+#!/bin/bash
+command -v curl >/dev/null 2>&1 || { echo >&2 "curl is required"; exit 1; }
+
+if [ "$1" == "" ]; then
+  echo "Usage: ${0} <warp+ id>"
+  exit 1
+fi
+
+RUNNING=true
+BOOSTED=0
+trap stop INT
+function stop() {
+  RUNNING=false
+  echo "${BOOSTED}GB boosted, bye bye!"
+}
+
+echo "Boosting.. press Ctrl+C to stop"
+data='{"referrer":"'"${1}"'"}'
+while $RUNNING;do
+  if ! curl  'https://api.cloudflareclient.com/v0a778/reg' --data "$data" > /dev/null 2>&1; then
+    BOOSTED=$((BOOSTED+1))
+  fi
+  sleep 5
+done
