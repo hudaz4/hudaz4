@@ -26,6 +26,7 @@ declare -A SERVERS=(
     ["priv.ns5.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
     ["freesg.ns.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
     ["freeuk.ns.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["james.dns.talong.tk"]="124.6.181.20 124.6.181.36 124.6.181.12"
 )
 
 ## Linux' dig command executable filepath
