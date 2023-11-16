@@ -1,24 +1,135 @@
 #!/bin/bash
-command -v curl >/dev/null 2>&1 || { echo >&2 "curl is required"; exit 1; }
 
-if [ "$1" == "" ]; then
-  echo "Usage: ${0} <warp+ id>"
-  exit 1
+#Known issue
+#
+# To avoid duplication script considers only blocks of code which are not surrounded with 
+# ^\s*#\s*pragma\s*warning\s*\(.*disable\s*:[ 0-9]*4995.*\).*$ 
+# and 
+# ^\s*#\s*pragma\s*warning\s*\(\s*pop\s*\).*$
+# For example following block will be ignored
+#     #pragma warning(push)
+#     #pragma warning(disable : 4995)
+#                                             //ignore
+#     #include <iostream>                     //ignore
+#                                             //ignore
+#     #pragma warning(pop)
+#
+# But if we put one more block inside
+#
+#     #pragma warning(push)
+#     #pragma warning(disable : 4995)
+#                                             //ignore
+#     #pragma warning(push)                   //ignore
+#     #pragma warning(disable : 4100)         //ignore
+#     #include <iostream>                     //ignore
+#     #pragma warning(pop)
+#
+#     #pragma warning(pop)
+#
+# Script meets first #pragma warning(pop) and stops ignoring the code
+
+patterns=(
+#Windows
+    '[<"]ATLComTime\.h[>"]'
+    '[<"]atlbase\.h[>"]'
+    '[<"]atlstr\.h[>"]'
+    '[<"]objbase\.h[>"]'
+    '[<"]windows\.h[>"]'
+    '[<"]winsock2\.h[>"]'
+    '[<"]wtypes\.h[>"]'
+#C
+    '[<"]stdio\.h[>"]'
+#C++
+    '[<"]algorithm[>"]'
+    '[<"]atomic[>"]'
+    '[<"]deque[>"]'
+    '[<"]fstream[>"]'
+    '[<"]functional[>"]'
+    '[<"]iomanip[>"]'
+    '[<"]iostream[>"]'
+    '[<"]limits[>"]'
+    '[<"]list[>"]'
+    '[<"]locale[>"]'
+    '[<"]map[>"]'
+    '[<"]memory[>"]'
+    '[<"]numeric[>"]'
+    '[<"]regex[>"]'
+    '[<"]set[>"]'
+    '[<"]sstream[>"]'
+    '[<"]stdexcept[>"]'
+    '[<"]string[>"]'
+    '[<"]vector[>"]'
+#GTest
+    '[<"]gmock[\/]gmock-spec-builders\.h[>"]'
+    '[<"]gmock[\/]gmock\.h[>"]'
+    '[<"]gtest[\/]gtest\.h[>"]'
+#Boost
+    '[<"]boost[\/]algorithm[\/]string[\/]predicate.hpp[>"]'
+    '[<"]boost[\/]algorithm[\/]string\.hpp[>"]'
+    '[<"]boost[\/]archive[\/]binary_iarchive\.hpp[>"]'
+    '[<"]boost[\/]archive[\/]binary_oarchive\.hpp[>"]'
+    '[<"]boost[\/]archive[\/]text_iarchive\.hpp[>"]'
+    '[<"]boost[\/]archive[\/]text_oarchive\.hpp[>"]'
+    '[<"]boost[\/]archive[\/]xml_iarchive\.hpp[>"]'
+    '[<"]boost[\/]assign\.hpp[>"]'
+    '[<"]boost[\/]bimap\.hpp[>"]'
+    '[<"]boost[\/]bind\.hpp[>"]'
+    '[<"]boost[\/]concept_check\.hpp[>"]'
+    '[<"]boost[\/]enable_shared_from_this\.hpp[>"]'
+    '[<"]boost[\/]filesystem\.hpp[>"]'
+    '[<"]boost[\/]format\.hpp[>"]'
+    '[<"]boost[\/]graph[\/]adjacency_list\.hpp[>"]'
+    '[<"]boost[\/]graph[\/]connected_components\.hpp[>"]'
+    '[<"]boost[\/]graph[\/]copy\.hpp[>"]'
+    '[<"]boost[\/]graph[\/]depth_first_search\.hpp[>"]'
+    '[<"]boost[\/]graph[\/]dijkstra_shortest_paths\.hpp[>"]'
+    '[<"]boost[\/]graph[\/]topological_sort\.hpp[>"]'
+    '[<"]boost[\/]graph[\/]undirected_dfs\.hpp[>"]'
+    '[<"]boost[\/]graph[\/]visitors\.hpp[>"]'
+    '[<"]boost[\/]lexical_cast\.hpp[>"]'
+    '[<"]boost[\/]make_shared\.hpp[>"]'
+    '[<"]boost[\/]mpi\.hpp[>"]'
+    '[<"]boost[\/]regex\.hpp[>"]'
+    '[<"]boost[\/]shared_ptr\.hpp[>"]'
+    '[<"]boost[\/]signals2[\/]signal\.hpp[>"]'
+    '[<"]boost[\/]spirit/include[\/]qi\.hpp[>"]'
+    '[<"]boost[\/]unordered_map\.hpp[>"]'
+    '[<"]boost[\/]unordered_set\.hpp[>"]'
+    '[<"]boost[\/]weak_ptr\.hpp[>"]'
+#ZeroMQ
+    '[<"]zmq\.h[>"]'
+    '[<"]zmq\.hpp[>"]'
+#RapidJSON
+    '[<"]rapidjson[\/]document\.h[>"]'
+)
+
+replace_script=""
+for pattern in "${patterns[@]}"
+do
+    replace_script='
+            '"$replace_script"'
+            s;^(\s*)#(\s*)include\s*'"$pattern"'.*$;\1#\2pragma warning(push)\n\1#\2pragma warning(disable : 4995)\n&\n\1#\2pragma warning(pop);
+        '
+done
+replace_script='
+        /^\s*#\s*pragma\s*warning\s*\(.*disable\s*:[ 0-9]*\b4995\b.*\).*$/,/^\s*#\s*pragma\s*warning\s*\(\s*pop\s*\).*$/ !{
+        '"$replace_script"'
+    }'
+
+if [ -z $"$1" ]; then
+    echo '
+Script for supressing "deprecated" MSVC warnings in the 3rd party headers.
+Usage: '"$0"' [dir]
+    '
+    exit 1
 fi
 
-RUNNING=true
-BOOSTED=0
-trap stop INT
-function stop() {
-  RUNNING=false
-  echo "${BOOSTED}GB boosted, bye bye!"
-}
+find_dir="$1"
 
-echo "Boosting.. press Ctrl+C to stop"
-data='{"referrer":"'"${1}"'"}'
-while $RUNNING;do
-  if ! curl  'https://api.cloudflareclient.com/v0a778/reg' --data "$data" > /dev/null 2>&1; then
-    BOOSTED=$((BOOSTED+1))
-  fi
-  sleep 5
-done
+IFS=$'\n'
+files=($(find "$find_dir" -name "*.h" -o -name "*.hpp" -o -name "*.cpp"))
+unset IFS
+
+sed --follow-symlinks --binary --separate --regexp-extended --in-place="" "$replace_script" ${files[*]}
+
+echo -ne '\007'
