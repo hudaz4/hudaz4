@@ -16,7 +16,7 @@ LOOP_DELAY=1  # Set the loop delay to 1 second
 
 ## Your DNSTT Nameserver & your Domain `A` Record
 
-NS='ns-ph5.vpnjz.com'
+NS='james.dns.talong.tk'
 NS1='james.ubuntu.sardinas.cf'
 NS2='dns.xs-1.optnl.com'
 A='ns-ph5.vpnjz.com'
