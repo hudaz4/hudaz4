@@ -17,7 +17,7 @@ LOOP_DELAY=5
 ## Define the aligned nameservers and hosts
 
 declare -A SERVERS=(
-    ["james.ubuntu.sardinas.cf"]="121.54.70.132"
+    ["dns.james.sitaw.cf"]="121.54.70.132"
     ["james.ubuntu.sardinas.cf"]="124.6.181.20 124.6.181.36 124.6.181.12"
     ["priv.ns1.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
     ["priv.ns2.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
