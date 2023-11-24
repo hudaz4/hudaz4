@@ -1,9 +1,9 @@
-NS='james.dns1.batagka.gq'
+NS='ns.james.palaboy.tech'
 NS1='dns.james.sitaw.cf'
-NS2='dns.frs-2.optnl.com'
-NS3='sg2ray-dns.mainssh.com'
-NS4='ns-sg3dns.srvdns.us'
-A='dns.ssh-sg-3.vpnsvr.net'
+NS2='ns.james.palaboy.tech'
+NS3='dns.james.sitaw.cf'
+NS4='ns.james.palaboy.tech'
+A='palaboy.tech'
 
 
 LOOP_DELAY=5
