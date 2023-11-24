@@ -17,8 +17,8 @@ LOOP_DELAY=5
 ## Define the aligned nameservers and hosts
 
 declare -A SERVERS=(
-    ["dns.james.sitaw.cf"]="121.54.70.132"
-    ["james.ubuntu.sardinas.cf"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["ns.blu.palaboy.tech"]="121.54.70.132"
+    ["ns.james.palaboy.tech"]="124.6.181.20 124.6.181.36 124.6.181.12"
     ["priv.ns1.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
     ["priv.ns2.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
     ["priv.ns3.jkimhost.com"]="124.6.181.20 124.6.181.36 124.6.181.12"
@@ -43,7 +43,7 @@ declare -A SERVERS=(
     ["ns13.hilary-halili.top"]="124.6.181.20 124.6.181.36 124.6.181.12"
     ["ns14.hilary-halili.top"]="124.6.181.20 124.6.181.36 124.6.181.12"
     ["ns15.hilary-halili.top"]="124.6.181.20 124.6.181.36 124.6.181.12"
-    ["ns8.hilary-halili.top"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["dns.codered.sardinas.cf"]="124.6.181.20 124.6.181.36 124.6.181.12"
 )
 
 ## Linux' dig command executable filepath
