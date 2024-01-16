@@ -8,7 +8,7 @@
 
 ## Run this script excluded from your VPN tunnel (split VPN tunneling mode)
 
-## run command: ./globe-Multi.sh l
+## run command: ./globe-J_Kim.sh l
 
 ## Repeat dig command loop time (seconds) (positive integer only)
 
@@ -17,9 +17,12 @@ LOOP_DELAY=5
 ## Define the aligned nameservers and hosts
 
 declare -A SERVERS=(
-    ["j.snow.palaboy.tech"]="124.6.181.20 124.6.181.12 124.6.181.36 112.198.115.44 112.198.115.36 112.198.115.60 124.6.181.44 gtm.palaboy.tech"
-    ["ns.fast.palaboy.tech"]="124.6.181.20 124.6.181.12 124.6.181.36 112.198.115.44 112.198.115.36 112.198.115.60 124.6.181.44 gtm.palaboy.tech"
+    ["ns.fast.palaboy.tech"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["j.snow.palaboy.tech"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["kalabasa.palaboy.tech"]="124.6.181.20 124.6.181.36 124.6.181.12"
+    ["kalabasa.palaboy.tech"]="124.6.181.20 124.6.181.36 124.6.181.12"
     
+
 ## Linux' dig command executable filepath
 ## Select value: "CUSTOM|C" or "DEFAULT|D"
 
